@@ -2,9 +2,9 @@ import { View, Text, StatusBar, Image, TextInput, ScrollView, TouchableOpacity }
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 
-import Bag from '../assets/icons/Bag';
 import Search from '../assets/icons/Search'
 import ChevronDown from '../assets/icons/ChevronDown';
+import CartButton from '../components/CartButton';
 
 const HomeScreen = () => {
 
@@ -21,14 +21,7 @@ const HomeScreen = () => {
             <View className="bg-light-400 w-full p-5 pt-16">
                 <View className="flex-row justify-between items-center">
                     <Text className="text-2xl font-bold text-white font-manrope">Hey, Rahul</Text>
-                    <TouchableOpacity
-                        className="relative"
-                        onPress={() => navigation.navigate('Cart')}>
-                        <Bag size={30} />
-                        <View className="h-4 w-4 bg-light-200 rounded-full flex justify-center items-center absolute -right-1 -top-1">
-                            <Text className="text-white text-xs font-manrope">3</Text>
-                        </View>
-                    </TouchableOpacity>
+                    <CartButton />
                 </View>
 
                 <View className="my-8 relative">
