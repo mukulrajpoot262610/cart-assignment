@@ -1,24 +1,20 @@
 import { View, Text, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
 import { useDispatch } from 'react-redux';
-import { removeItem } from '../global/slices/product';
+import { addItem } from '../global/slices/product';
+import Snackbar from 'react-native-snackbar';
 
-export default function CartProductCard({ item, onUpdateQuantity }) {
+export default function WishlistProductCard({ product }) {
 
-    const { id, product, quantity } = item;
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
-    const handleIncreaseQuantity = () => {
-        onUpdateQuantity(id, quantity + 1);
-    };
-
-    const handleDecreaseQuantity = () => {
-        if (quantity > 1) {
-            onUpdateQuantity(id, quantity - 1);
-        }
-        if (quantity === 1) {
-            dispatch(removeItem(id));
-        }
+    const handleAddToCart = () => {
+        dispatch(addItem({ quantity: 1, product, id: product.id }));
+        Snackbar.show({
+            text: 'Successfully added to Cart',
+            duration: Snackbar.LENGTH_SHORT,
+            backgroundColor: 'green',
+        });
     };
 
     return (
@@ -33,12 +29,8 @@ export default function CartProductCard({ item, onUpdateQuantity }) {
                 <Text className="font-manrope">${product.price}</Text>
             </View>
             <View className="flex-row items-center space-x-4">
-                <TouchableOpacity className="p-1" onPress={handleDecreaseQuantity}>
-                    <Text>-</Text>
-                </TouchableOpacity>
-                <Text className="text-sm">{quantity}</Text>
-                <TouchableOpacity className="p-1" onPress={handleIncreaseQuantity}>
-                    <Text>+</Text>
+                <TouchableOpacity className="bg-light-400 rounded-2xl p-3 px-6 flex justify-center items-center" onPress={handleAddToCart}>
+                    <Text className="text-white text-sm">Add to Cart</Text>
                 </TouchableOpacity>
             </View>
         </View>

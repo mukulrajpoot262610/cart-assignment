@@ -4,6 +4,7 @@ const initialState = {
     loading: false,
     items: [],
     products: null,
+    favorites: [],
 };
 
 export const productSlice = createSlice({
@@ -38,13 +39,23 @@ export const productSlice = createSlice({
                 existingItem.quantity = quantity;
             }
         },
+        toggleFavorite: (state, action) => {
+            const itemId = action.payload;
+            const existingItem = state.favorites.find(item => item.id === itemId);
+
+            if (existingItem) {
+                state.favorites = state.favorites.filter(item => item.id !== itemId);
+            } else {
+                state.favorites.push(state.products.find(item => item.id === itemId));
+            }
+        },
         clearCart: state => {
             state.items = [];
         },
     },
 });
 
-export const { setProduct, setUserLoading, addItem, removeItem, updateQuantity, clearCart } = productSlice.actions;
+export const { setProduct, setUserLoading, addItem, removeItem, updateQuantity, clearCart, toggleFavorite } = productSlice.actions;
 
 
 export default productSlice.reducer;

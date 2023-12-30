@@ -1,4 +1,4 @@
-import { View, Text, StatusBar, TextInput, ScrollView, Image } from 'react-native';
+import { View, Text, StatusBar, TextInput, ScrollView, Image, TouchableOpacity } from 'react-native';
 import React, { useEffect, useState } from 'react';
 
 import Search from '../assets/icons/Search';
@@ -11,11 +11,12 @@ import ProductCard from '../components/ProductCard';
 import Loading from '../components/Loading';
 
 import Off50 from '../assets/images/50off';
+import { useNavigation } from '@react-navigation/native';
 
 const HomeScreen = () => {
 
     const dispatch = useDispatch();
-
+    const navigation = useNavigation()
     const { products } = useSelector(state => state.products);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -66,10 +67,12 @@ const HomeScreen = () => {
                     </View>
                     <View>
                         <Text className="uppercase font-extrabold text-xs text-dark-400 font-manrope">Within</Text>
-                        <View className="flex-row items-center">
-                            <Text className="font-extrabold text-sm mt-1 text-dark-100 font-manrope">1 Hour</Text>
-                            <ChevronDown className="mt-2 ml-1" />
-                        </View>
+                        <TouchableOpacity onPress={() => navigation.navigate('Wishlist')}>
+                            <View className="flex-row items-center">
+                                <Text className="font-extrabold text-sm mt-1 text-dark-100 font-manrope">1 Hour</Text>
+                                <ChevronDown className="mt-2 ml-1" />
+                            </View>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </View>

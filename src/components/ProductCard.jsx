@@ -1,17 +1,18 @@
-import { View, Text, Image, TouchableOpacity, Touchable } from 'react-native'
-import React, { useState } from 'react'
-import Heart2 from '../assets/icons/Heart2'
+import { View, Text, Image, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import Heart2 from '../assets/icons/Heart2';
 import Heart2Filled from '../assets/icons/Heart2Filled';
 import { useNavigation } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
-import { addItem } from '../global/slices/product';
+import { useDispatch, useSelector } from 'react-redux';
+import { addItem, toggleFavorite } from '../global/slices/product';
 import Snackbar from 'react-native-snackbar';
 
 const ProductCard = ({ product }) => {
 
     const navigation = useNavigation();
-    const dispatch = useDispatch()
-    const [isFavorite, setIsFavorite] = useState(false);
+    const dispatch = useDispatch();
+    const { favorites } = useSelector(state => state.products);
+    const [isFavorite, setIsFavorite] = useState(Boolean(favorites.find(item => item.id === product.id)));
 
     const handleAddToCart = () => {
         dispatch(addItem({ quantity: 1, product, id: product.id }));
@@ -22,6 +23,14 @@ const ProductCard = ({ product }) => {
         });
     };
 
+    const handleFavorite = () => {
+        dispatch(toggleFavorite(product.id));
+        Snackbar.show({
+            text: 'Successfully added to Wishlist',
+            duration: Snackbar.LENGTH_SHORT,
+            backgroundColor: 'green',
+        });
+    };
 
     return (
         <TouchableOpacity className="w-40 h-48 rounded-2xl relative mb-4 mr-4" onPress={() => navigation.navigate('Product', { id: product.id })}>
@@ -29,7 +38,7 @@ const ProductCard = ({ product }) => {
                 className="h-32 w-full rounded-2xl" source={{ uri: product.thumbnail }} />
 
             <TouchableOpacity className="absolute left-3 top-3 rounded-2xl" onPress={() => setIsFavorite(!isFavorite)}>
-                {isFavorite ? <Heart2Filled /> : <Heart2 />}
+                {favorites.find(item => item.id === product.id) ? <Heart2Filled onPress={handleFavorite} /> : <Heart2 onPress={handleFavorite} />}
 
             </TouchableOpacity>
 
@@ -44,7 +53,7 @@ const ProductCard = ({ product }) => {
                 </TouchableOpacity>
             </View>
         </TouchableOpacity>
-    )
-}
+    );
+};
 
-export default ProductCard
+export default ProductCard;
