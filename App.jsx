@@ -1,7 +1,7 @@
 
 import React from 'react';
 
-import { SafeAreaView, StatusBar, useColorScheme } from 'react-native';
+import { SafeAreaView, StatusBar, View, useColorScheme } from 'react-native';
 import AppNavigator from './navigation/AppNavigation';
 
 function App() {
@@ -12,14 +12,9 @@ function App() {
   };
 
   return (
-    <SafeAreaView style={backgroundStyle} className="min-h-screen !font-manrope">
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-
+    <View style={backgroundStyle} className="min-h-screen font-manrope">
       <AppNavigator />
-    </SafeAreaView>
+    </View>
   );
 }
 
