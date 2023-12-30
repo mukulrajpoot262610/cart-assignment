@@ -1,10 +1,10 @@
-import { View, Text, StatusBar, ScrollView, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
-import BackButton from '../components/BackButton'
-import { useSelector } from 'react-redux'
-import { useNavigation } from '@react-navigation/native'
-import WishlistProductCard from '../components/WishlistProductCard'
-import CartButton from '../components/CartButton'
+import { View, Text, StatusBar, ScrollView, Image, TouchableOpacity } from 'react-native';
+import React from 'react';
+import BackButton from '../components/common/BackButton';
+import { useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
+import WishlistProductCard from '../components/WishlistScreen/WishlistProductCard';
+import CartButton from '../components/common/CartButton';
 
 const WishListScreen = () => {
 
@@ -52,7 +52,7 @@ const WishListScreen = () => {
 
             </View>
         </View>
-    )
-}
+    );
+};
 
-export default WishListScreen
+export default WishListScreen;

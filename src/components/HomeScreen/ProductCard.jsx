@@ -1,10 +1,10 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
-import Heart2 from '../assets/icons/Heart2';
-import Heart2Filled from '../assets/icons/Heart2Filled';
+import Heart2 from '../../assets/icons/Heart2';
+import Heart2Filled from '../../assets/icons/Heart2Filled';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { addItem, toggleFavorite } from '../global/slices/product';
+import { addItem, toggleFavorite } from '../../global/slices/product';
 import Snackbar from 'react-native-snackbar';
 
 const ProductCard = ({ product }) => {

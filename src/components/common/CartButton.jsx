@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import Bag from '../assets/icons/Bag';
+import Bag from '../../assets/icons/Bag';
 import { useSelector } from 'react-redux';
 
 const CartButton = ({ color }) => {

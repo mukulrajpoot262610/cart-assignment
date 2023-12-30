@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
 import { useDispatch } from 'react-redux';
-import { addItem } from '../global/slices/product';
+import { addItem } from '../../global/slices/product';
 import Snackbar from 'react-native-snackbar';
 
 export default function WishlistProductCard({ product }) {

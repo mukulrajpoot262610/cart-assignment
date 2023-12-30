@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
 import { useDispatch } from 'react-redux';
-import { removeItem } from '../global/slices/product';
+import { removeItem } from '../../global/slices/product';
 
 export default function CartProductCard({ item, onUpdateQuantity }) {
 

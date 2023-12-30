@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import ChevronLeft from '../assets/icons/ChevronLeft';
+import ChevronLeft from '../../assets/icons/ChevronLeft';
 
 const BackButton = () => {
 
