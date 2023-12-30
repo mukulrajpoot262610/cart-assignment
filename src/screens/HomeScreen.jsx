@@ -1,4 +1,4 @@
-import { View, Text, StatusBar, TextInput, ScrollView } from 'react-native';
+import { View, Text, StatusBar, TextInput, ScrollView, Image } from 'react-native';
 import React, { useEffect, useState } from 'react';
 
 import Search from '../assets/icons/Search';
@@ -10,11 +10,13 @@ import { setProduct } from '../global/slices/product';
 import ProductCard from '../components/ProductCard';
 import Loading from '../components/Loading';
 
+import Off50 from '../assets/images/50off';
+
 const HomeScreen = () => {
 
     const dispatch = useDispatch();
 
-    const { product } = useSelector(state => state.products);
+    const { products } = useSelector(state => state.products);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -81,7 +83,9 @@ const HomeScreen = () => {
                         className="my-4 px-5"
                     >
                         <View className="bg-light-200 mr-5 rounded-2xl h-36 w-72 p-5 flex-row items-center">
-                            <View className="border w-1/3 mr-10" />
+                            <View className="border w-1/3 mr-10">
+                                <Off50 height={50} width={50} />
+                            </View>
                             <View>
                                 <Text className="font-light text-white text-xl font-manrope">
                                     Get
@@ -117,8 +121,8 @@ const HomeScreen = () => {
 
                     <View className="my-5">
                         {
-                            isLoading ? <View><Loading /></View> : (product && <View className="flex-row flex-wrap">
-                                {product.map((p, i) => <ProductCard key={i} product={p} />)}
+                            isLoading ? <View><Loading /></View> : (products && <View className="flex-row flex-wrap">
+                                {products.map((p, i) => <ProductCard key={i} product={p} />)}
                             </View>)
                         }
                     </View>

@@ -8,6 +8,8 @@ import Heart from '../assets/icons/Heart';
 import { useDispatch } from 'react-redux';
 import { getProduct } from '../services/api';
 import Loading from '../components/Loading';
+import Snackbar from 'react-native-snackbar';
+import { addItem } from '../global/slices/product';
 
 const ProductDetailScreen = ({ route }) => {
 
@@ -35,6 +37,15 @@ const ProductDetailScreen = ({ route }) => {
         fetchProducts();
 
     }, [dispatch, id]);
+
+    const handleAddToCart = () => {
+        dispatch(addItem({ quantity: 1, product: productData, id: productData.id }));
+        Snackbar.show({
+            text: 'Successfully added to Cart',
+            duration: Snackbar.LENGTH_SHORT,
+            backgroundColor: 'green',
+        });
+    };
 
     return (
         isLoading ? <View className="h-full flex justify-center items-center"><Loading /></View> : <View className="h-full w-full">
@@ -94,7 +105,7 @@ const ProductDetailScreen = ({ route }) => {
 
                 {/* BUTTON */}
                 <View className="flex-row items-center px-5 justify-between gap-5">
-                    <TouchableOpacity className="border border-light-400 p-5 rounded-2xl flex-1 justify-center items-center">
+                    <TouchableOpacity className="border border-light-400 p-5 rounded-2xl flex-1 justify-center items-center" onPress={handleAddToCart}>
                         <Text className="text-light-400">Add To Cart</Text>
                     </TouchableOpacity>
                     <TouchableOpacity className="bg-light-400 p-5 rounded-2xl flex-1 justify-center items-center">
