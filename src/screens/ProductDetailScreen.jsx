@@ -5,11 +5,13 @@ import CartButton from '../components/CartButton';
 import StarRating from '../components/StarRating';
 
 import Heart from '../assets/icons/Heart';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getProduct } from '../services/api';
 import Loading from '../components/Loading';
 import Snackbar from 'react-native-snackbar';
-import { addItem } from '../global/slices/product';
+import { addItem, toggleFavorite } from '../global/slices/product';
+import Heart2 from '../assets/icons/Heart2';
+import Heart2Filled from '../assets/icons/Heart2Filled';
 
 const ProductDetailScreen = ({ route }) => {
 
@@ -19,6 +21,7 @@ const ProductDetailScreen = ({ route }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [isFavorite, setIsFavorite] = useState(false);
     const [productData, setProductData] = useState();
+    const { favorites } = useSelector(state => state.products);
 
     useEffect(() => {
 
@@ -45,6 +48,20 @@ const ProductDetailScreen = ({ route }) => {
             duration: Snackbar.LENGTH_SHORT,
             backgroundColor: 'green',
         });
+    };
+
+    const handleFavorite = () => {
+        dispatch(toggleFavorite(id));
+        favorites.find(item => item.id === id) ? Snackbar.show({
+            text: 'Successfully removed from Wishlist',
+            duration: Snackbar.LENGTH_SHORT,
+            backgroundColor: 'green',
+        }) : Snackbar.show({
+            text: 'Successfully added to Wishlist',
+            duration: Snackbar.LENGTH_SHORT,
+            backgroundColor: 'green',
+        });
+
     };
 
     return (
@@ -83,8 +100,8 @@ const ProductDetailScreen = ({ route }) => {
                         className="w-full h-full"
                         source={{ uri: productData.images[3] }}
                     />
-                    <TouchableOpacity className="absolute right-5 top-5 bg-white p-4 rounded-2xl">
-                        <Heart className="" />
+                    <TouchableOpacity className="absolute right-6 top-6 rounded-2xl" onPress={() => setIsFavorite(!isFavorite)}>
+                        {favorites.find(item => item.id === id) ? <Heart2Filled onPress={handleFavorite} /> : <Heart2 onPress={handleFavorite} />}
                     </TouchableOpacity>
                 </View>
 

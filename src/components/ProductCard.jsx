@@ -39,7 +39,6 @@ const ProductCard = ({ product }) => {
 
             <TouchableOpacity className="absolute left-3 top-3 rounded-2xl" onPress={() => setIsFavorite(!isFavorite)}>
                 {favorites.find(item => item.id === product.id) ? <Heart2Filled onPress={handleFavorite} /> : <Heart2 onPress={handleFavorite} />}
-
             </TouchableOpacity>
 
             <View className="px-4 flex-row justify-between items-center">
