@@ -5,8 +5,7 @@ import CartButton from '../components/CartButton';
 import StarRating from '../components/StarRating';
 
 import Heart from '../assets/icons/Heart';
-import { useDispatch, useSelector } from 'react-redux';
-import { setUserLoading } from '../global/slices/product';
+import { useDispatch } from 'react-redux';
 import { getProduct } from '../services/api';
 import Loading from '../components/Loading';
 
@@ -70,7 +69,7 @@ const ProductDetailScreen = ({ route }) => {
             <View className="h-64 relative">
                 <Image
                     className="w-full h-full"
-                    source={{ uri: productData.thumbnail }}
+                    source={{ uri: productData.images[3] }}
                 />
                 <TouchableOpacity className="absolute right-5 top-5 bg-white p-4 rounded-2xl">
                     <Heart className="" />

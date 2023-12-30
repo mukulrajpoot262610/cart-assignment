@@ -1,5 +1,5 @@
-import { View, Text, StatusBar, Image, TextInput, ScrollView, TouchableOpacity } from 'react-native';
-import React, { useEffect } from 'react';
+import { View, Text, StatusBar, TextInput, ScrollView, FlatList } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
 import Search from '../assets/icons/Search';
@@ -7,26 +7,29 @@ import ChevronDown from '../assets/icons/ChevronDown';
 import CartButton from '../components/CartButton';
 import { getProducts } from '../services/api';
 import { useDispatch, useSelector } from 'react-redux';
-import { setProduct, setUserLoading } from '../global/slices/product';
+import { setProduct } from '../global/slices/product';
+import ProductCard from '../components/ProductCard';
+import Loading from '../components/Loading';
 
 const HomeScreen = () => {
 
     const navigation = useNavigation();
     const dispatch = useDispatch();
 
-    const { loading, products } = useSelector(state => state.products);
+    const { product } = useSelector(state => state.products);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
 
         const fetchProducts = async () => {
-            dispatch(setUserLoading(true));
+            setIsLoading(true);
             try {
                 const { data } = await getProducts();
-                dispatch(setProduct(data));
+                dispatch(setProduct(data.products));
             } catch (err) {
                 console.warn(err);
             } finally {
-                dispatch(setUserLoading(false));
+                setIsLoading(false);
             }
         };
 
@@ -71,48 +74,58 @@ const HomeScreen = () => {
                 </View>
             </View>
 
-            {/* DISCOUNT */}
-            <View className="my-5">
-                <ScrollView
-                    showsHorizontalScrollIndicator={false}
-                    horizontal={true}
-                    className="my-4 px-5"
-                >
-                    <View className="bg-light-200 mr-5 rounded-2xl h-36 w-72 p-5 flex-row items-center">
-                        <View className="border w-1/3 mr-10" />
-                        <View>
-                            <Text className="font-light text-white text-xl font-manrope">
-                                Get
-                            </Text>
-                            <Text className="font-bold text-white text-2xl uppercase font-manrope">
-                                50% Off
-                            </Text>
-                            <Text className="font-light text-white text-base font-manrope">
-                                On first 03 Order
-                            </Text>
+            <ScrollView>
+                {/* DISCOUNT */}
+                <View className="my-5">
+                    <ScrollView
+                        showsHorizontalScrollIndicator={false}
+                        horizontal={true}
+                        className="my-4 px-5"
+                    >
+                        <View className="bg-light-200 mr-5 rounded-2xl h-36 w-72 p-5 flex-row items-center">
+                            <View className="border w-1/3 mr-10" />
+                            <View>
+                                <Text className="font-light text-white text-xl font-manrope">
+                                    Get
+                                </Text>
+                                <Text className="font-bold text-white text-2xl uppercase font-manrope">
+                                    50% Off
+                                </Text>
+                                <Text className="font-light text-white text-base font-manrope">
+                                    On first 03 Order
+                                </Text>
+                            </View>
                         </View>
-                    </View>
-                    <View className="bg-[#FFBC6E] rounded-2xl h-36 w-72 p-5 flex-row items-center mr-10">
-                        <View className="border w-1/3 mr-10" />
-                        <View>
-                            <Text className="font-light text-white text-xl">
-                                Get
-                            </Text>
-                            <Text className="font-bold text-white text-2xl uppercase">
-                                50% Off
-                            </Text>
-                            <Text className="font-light text-white text-base">
-                                On first 03 Order
-                            </Text>
+                        <View className="bg-[#FFBC6E] rounded-2xl h-36 w-72 p-5 flex-row items-center mr-10">
+                            <View className="border w-1/3 mr-10" />
+                            <View>
+                                <Text className="font-light text-white text-xl">
+                                    Get
+                                </Text>
+                                <Text className="font-bold text-white text-2xl uppercase">
+                                    50% Off
+                                </Text>
+                                <Text className="font-light text-white text-base">
+                                    On first 03 Order
+                                </Text>
+                            </View>
                         </View>
-                    </View>
-                </ScrollView>
-            </View>
+                    </ScrollView>
+                </View>
 
-            {/* RECOMMENDATION */}
-            <View className="px-5">
-                <Text className="text-3xl text-black font-manrope" onPress={() => navigation.navigate('Product', { id: 1 })}>Recommended</Text>
-            </View>
+                {/* RECOMMENDATION */}
+                <View className="px-5">
+                    <Text className="text-3xl text-black font-manrope" onPress={() => navigation.navigate('Product', { id: 1 })}>Recommended</Text>
+
+                    <View className="my-5">
+                        {
+                            isLoading ? <View><Loading /></View> : (product && <View className="flex-row flex-wrap">
+                                {product.map((p, i) => <ProductCard key={i} product={p} />)}
+                            </View>)
+                        }
+                    </View>
+                </View>
+            </ScrollView>
         </View>
     );
 };
