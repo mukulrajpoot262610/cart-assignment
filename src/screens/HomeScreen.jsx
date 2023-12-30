@@ -1,6 +1,5 @@
-import { View, Text, StatusBar, TextInput, ScrollView, FlatList } from 'react-native';
+import { View, Text, StatusBar, TextInput, ScrollView } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
 
 import Search from '../assets/icons/Search';
 import ChevronDown from '../assets/icons/ChevronDown';
@@ -13,7 +12,6 @@ import Loading from '../components/Loading';
 
 const HomeScreen = () => {
 
-    const navigation = useNavigation();
     const dispatch = useDispatch();
 
     const { product } = useSelector(state => state.products);
@@ -115,7 +113,7 @@ const HomeScreen = () => {
 
                 {/* RECOMMENDATION */}
                 <View className="px-5">
-                    <Text className="text-3xl text-black font-manrope" onPress={() => navigation.navigate('Product', { id: 1 })}>Recommended</Text>
+                    <Text className="text-3xl text-black font-manrope">Recommended</Text>
 
                     <View className="my-5">
                         {

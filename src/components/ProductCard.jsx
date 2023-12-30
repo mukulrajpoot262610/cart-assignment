@@ -19,9 +19,15 @@ const ProductCard = ({ product }) => {
 
             </TouchableOpacity>
 
-            <View className="px-4">
-                <Text className="text-sm font-bold mt-2">${product.price}</Text>
-                <Text className="text-sm font-light line-clamp-1">{product.title}</Text>
+            <View className="px-4 flex-row justify-between items-center">
+                <View>
+                    <Text className="text-sm font-bold mt-2">${product.price}</Text>
+                    <Text numberOfLines={1} className="text-sm font-light max-w-[100px]">{product.title}</Text>
+                </View>
+
+                <TouchableOpacity className="bg-light-400 rounded-2xl h-6 w-6 flex justify-center items-center">
+                    <Text className="text-white text-sm">+</Text>
+                </TouchableOpacity>
             </View>
         </TouchableOpacity>
     )
