@@ -1,8 +1,10 @@
 
 import React from 'react';
 
-import { SafeAreaView, StatusBar, View, useColorScheme } from 'react-native';
+import { View, useColorScheme } from 'react-native';
 import AppNavigator from './navigation/AppNavigation';
+import { Provider } from 'react-redux';
+import { store } from './src/global/store';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -13,7 +15,9 @@ function App() {
 
   return (
     <View style={backgroundStyle} className="min-h-screen font-manrope">
-      <AppNavigator />
+      <Provider store={store}>
+        <AppNavigator />
+      </Provider>
     </View>
   );
 }

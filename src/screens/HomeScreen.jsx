@@ -1,14 +1,38 @@
 import { View, Text, StatusBar, Image, TextInput, ScrollView, TouchableOpacity } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
-import Search from '../assets/icons/Search'
+import Search from '../assets/icons/Search';
 import ChevronDown from '../assets/icons/ChevronDown';
 import CartButton from '../components/CartButton';
+import { getProducts } from '../services/api';
+import { useDispatch, useSelector } from 'react-redux';
+import { setProduct, setUserLoading } from '../global/slices/product';
 
 const HomeScreen = () => {
 
     const navigation = useNavigation();
+    const dispatch = useDispatch();
+
+    const { loading, products } = useSelector(state => state.products);
+
+    useEffect(() => {
+
+        const fetchProducts = async () => {
+            dispatch(setUserLoading(true));
+            try {
+                const { data } = await getProducts();
+                dispatch(setProduct(data));
+            } catch (err) {
+                console.warn(err);
+            } finally {
+                dispatch(setUserLoading(false));
+            }
+        };
+
+        fetchProducts();
+
+    }, [dispatch]);
 
     return (
         <View className="h-full">
@@ -26,7 +50,7 @@ const HomeScreen = () => {
 
                 <View className="my-8 relative">
                     <Search className="absolute z-40 top-4 left-5" size={30} />
-                    <TextInput className="bg-light-300 rounded-full p-4 pl-12" placeholder='Search Products or Store' />
+                    <TextInput className="bg-light-300 rounded-full p-4 pl-12" placeholder="Search Products or Store" />
                 </View>
 
                 <View className="flex-row justify-between">
@@ -55,7 +79,7 @@ const HomeScreen = () => {
                     className="my-4 px-5"
                 >
                     <View className="bg-light-200 mr-5 rounded-2xl h-36 w-72 p-5 flex-row items-center">
-                        <View className="border w-1/3 mr-10"></View>
+                        <View className="border w-1/3 mr-10" />
                         <View>
                             <Text className="font-light text-white text-xl font-manrope">
                                 Get
@@ -69,7 +93,7 @@ const HomeScreen = () => {
                         </View>
                     </View>
                     <View className="bg-[#FFBC6E] rounded-2xl h-36 w-72 p-5 flex-row items-center mr-10">
-                        <View className="border w-1/3 mr-10"></View>
+                        <View className="border w-1/3 mr-10" />
                         <View>
                             <Text className="font-light text-white text-xl">
                                 Get
@@ -87,7 +111,7 @@ const HomeScreen = () => {
 
             {/* RECOMMENDATION */}
             <View className="px-5">
-                <Text className="text-3xl text-black font-manrope" onPress={() => navigation.navigate('Product')}>Recommended</Text>
+                <Text className="text-3xl text-black font-manrope" onPress={() => navigation.navigate('Product', { id: 1 })}>Recommended</Text>
             </View>
         </View>
     );
