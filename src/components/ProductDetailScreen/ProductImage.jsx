@@ -5,6 +5,7 @@ import Heart2Filled from '../../assets/icons/Heart2Filled'
 import { useDispatch, useSelector } from 'react-redux'
 import { toggleFavorite } from '../../global/slices/product'
 import Snackbar from 'react-native-snackbar'
+import { SliderBox } from 'react-native-image-slider-box';
 
 const ProductImage = ({ productData, id }) => {
 
@@ -27,9 +28,16 @@ const ProductImage = ({ productData, id }) => {
 
     return (
         <View className="h-64 relative">
-            <Image
-                className="w-full h-full"
-                source={{ uri: productData.images[3] }}
+            <SliderBox images={productData.images}
+                className="h-full"
+                dotColor="#F9B023"
+                inactiveDotColor="#E7ECF0"
+                dotStyle={{
+                    height: 4,
+                    width: 20,
+                    margin: -1,
+                }}
+
             />
             <TouchableOpacity className="absolute right-6 top-6 rounded-2xl bg-white flex justify-center items-center h-8 w-8 pt-1" onPress={handleFavorite}>
                 {favorites.find(item => item.id === id) ? <Heart2Filled /> : <Heart2 />}
